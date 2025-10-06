@@ -15,6 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using MinimalApi.Dominio.Validacoes;
 
 
 #region Builder
@@ -202,32 +203,10 @@ app.MapGet("/administradores/{id}", ([FromRoute] int id, IAdministradorServico a
 #endregion
 
 #region Veiculos
-
-ErrosDeValidacao ValidaDTO(VeiculoDTO veiculoDTO)
-{
-    var validacao = new ErrosDeValidacao
-    {
-        Mensagens = new List<string>()
-    };
-
-    if (string.IsNullOrEmpty(veiculoDTO.Nome))
-        validacao.Mensagens.Add("O nome não pode estar em branco.");
-
-
-    if (string.IsNullOrEmpty(veiculoDTO.Marca))
-        validacao.Mensagens.Add("A marca não pode estar em branco.");
-
-    if (veiculoDTO.Ano < 1950)
-        validacao.Mensagens.Add("Veículo muito antigo. Somente são aceitos veículos com ano igual ou superior a 1950.");
-
-
-    return validacao;
-}
-
 app.MapPost("/veiculos", ([FromBody] VeiculoDTO veiculoDTO, IVeiculoServico veiculoServico) =>
 {
 
-    var validacao = ValidaDTO(veiculoDTO);
+    var validacao = VeiculoValidador.ValidaDTO(veiculoDTO);
 
     if (validacao.Mensagens.Count > 0)
         return Results.BadRequest(validacao);
@@ -270,7 +249,7 @@ app.MapPut("/veiculos/{id}", ([FromRoute] int id, [FromBody] VeiculoDTO veiculoD
 
     if (veiculo == null) return Results.NotFound();
 
-    var validacao = ValidaDTO(veiculoDTO);
+    var validacao = VeiculoValidador.ValidaDTO(veiculoDTO);
 
     if (validacao.Mensagens.Count > 0)
         return Results.BadRequest(validacao);
