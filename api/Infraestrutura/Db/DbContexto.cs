@@ -5,11 +5,8 @@ namespace MinimalApi.Infraestrutura.Db;
 
 public class DbContexto : DbContext
 {
-    private readonly IConfiguration _configuracaoAppSettings;
-    public DbContexto(IConfiguration configuracaoAppSettings)
-    {
-        _configuracaoAppSettings = configuracaoAppSettings;
-    }
+    public DbContexto(DbContextOptions<DbContexto> options) : base(options) { }
+
     public DbSet<Administrador> Administradores { get; set; } = default!;
     public DbSet<Veiculo> Veiculos { get; set; } = default!;
 
@@ -30,12 +27,16 @@ public class DbContexto : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            var stringConexao = _configuracaoAppSettings.GetConnectionString("MySql")?.ToString();
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            var configuration = builder.Build();
+            var stringConexao = configuration.GetConnectionString("MySql");
 
             if (!string.IsNullOrEmpty(stringConexao))
             {
-                optionsBuilder.UseMySql(stringConexao,
-                ServerVersion.AutoDetect(stringConexao));
+                optionsBuilder.UseMySql(stringConexao, ServerVersion.AutoDetect(stringConexao));
             }
         }
     }
