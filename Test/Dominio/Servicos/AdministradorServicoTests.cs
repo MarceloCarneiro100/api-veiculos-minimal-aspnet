@@ -4,6 +4,7 @@ using MinimalApi.Dominio.Entidades;
 using MinimalApi.Dominio.Servicos;
 using MinimalApi.Infraestrutura.Db;
 
+
 namespace Test.Dominio.Servicos
 {
     [TestClass]

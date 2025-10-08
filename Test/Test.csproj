@@ -1,28 +1,41 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- CONFIGURAÇÕES GERAIS DO PROJETO DE TESTES -->
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
+    <TargetFramework>net8.0</TargetFramework>       
+    <ImplicitUsings>enable</ImplicitUsings>          
+    <Nullable>enable</Nullable>                       
+    <IsPackable>false</IsPackable>                   
+    <IsTestProject>true</IsTestProject>               
   </PropertyGroup>
 
+  <!-- DEPENDÊNCIAS PARA TESTES E EF CORE -->
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.9" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />                     
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />          
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.0" /> 
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />                 
+    <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />                     
+    <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />                   
   </ItemGroup>
 
+  <!-- USINGS EXTERNOS PARA TESTES -->
   <ItemGroup>
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 
+  <!-- REFERÊNCIA AO PROJETO PRINCIPAL -->
   <ItemGroup>
     <ProjectReference Include="..\api\minimal-api.csproj" />
+  </ItemGroup>
+
+  <!-- INCLUSÃO DO ARQUIVO DE CONFIGURAÇÃO -->
+  <ItemGroup>
+    <!-- Garante que o appsettings.json seja copiado para o diretório de saída -->
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
