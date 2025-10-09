@@ -1,6 +1,5 @@
 using System.Net.Http.Json;
 using MinimalApi.Dominio.ModelViews;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
@@ -15,7 +14,7 @@ namespace Test.Requests
     [TestClass]
     public class AdministradorRequestTests
     {
-        private HttpClient _client = null;
+        private HttpClient _client = null!;
 
         private void LimparBaseDeDados(DbContexto contexto)
         {
