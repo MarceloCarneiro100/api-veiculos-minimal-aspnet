@@ -11,7 +11,8 @@
 
   <!-- DEPENDÊNCIAS PARA TESTES E EF CORE -->
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.0" />                     
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.5" />                     
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />          
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.0" /> 
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
@@ -37,5 +38,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <Target Name="CopyDepsFile" AfterTargets="Build">
+  <Copy SourceFiles="..\api\bin\Debug\net8.0\minimal-api.deps.json"
+        DestinationFiles="bin\Debug\net8.0\testhost.deps.json"
+        SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>

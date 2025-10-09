@@ -33,7 +33,9 @@ public class AdministradorServico : IAdministradorServico
 
     public List<Administrador> Todos(int? pagina)
     {
-        var query = _contexto.Administradores.AsQueryable();
+        var query = _contexto.Administradores
+            .OrderBy(a => a.Id)
+            .AsQueryable();
 
         int itensPorPagina = 10;
         if (pagina != null && pagina > 0)

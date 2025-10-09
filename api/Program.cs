@@ -21,6 +21,9 @@ using MinimalApi.Dominio.Validacoes;
 #region Builder
 var builder = WebApplication.CreateBuilder(args);
 
+// Reduz o nível de log para esconder comandos SQL do EF Core
+builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Warning);
+
 var key = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key não configurada.");
 
 builder.Services.AddAuthentication(option =>
@@ -286,4 +289,4 @@ app.UseAuthorization();
 app.Run();
 #endregion
 
- 
+public partial class Program { }
